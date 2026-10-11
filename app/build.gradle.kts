@@ -3,6 +3,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+// Shared versioning (version.properties) + release signing, see gradle/android-common.gradle
+apply(from = rootProject.file("gradle/android-common.gradle"))
+
 android {
     namespace = "io.github.vladgba.picostrips"
     compileSdk = 36
@@ -11,8 +14,6 @@ android {
         applicationId = "io.github.vladgba.picostrips"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }
     }
 
@@ -21,8 +22,6 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Debug-signed so the release APK is installable out of the box; replace with your own key.
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
