@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.ui
+package x.vladgba.strips.ui
 
 import android.Manifest
 import android.app.Activity
@@ -12,15 +12,16 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import io.github.vladgba.picostrips.CodeActivity
-import io.github.vladgba.picostrips.R
-import io.github.vladgba.picostrips.data.Entry
-import io.github.vladgba.picostrips.data.History
-import io.github.vladgba.picostrips.engine.Formats
-import io.github.vladgba.picostrips.engine.Images
-import io.github.vladgba.picostrips.engine.ScanResult
-import io.github.vladgba.picostrips.engine.ZXingCppEngine
+import x.vladgba.strips.CodeActivity
+import x.vladgba.strips.R
+import x.vladgba.strips.data.Entry
+import x.vladgba.strips.data.History
+import x.vladgba.strips.engine.Formats
+import x.vladgba.strips.engine.Images
+import x.vladgba.strips.engine.ScanResult
+import x.vladgba.strips.engine.ZXingCppEngine
 import kotlin.concurrent.thread
+import x.vladgba.strips.engine.LumaFrame
 
 class ScanPage(private val activity: Activity, val root: View) {
     private val viewfinder: ViewfinderView = root.findViewById(R.id.viewfinder)
@@ -127,7 +128,7 @@ class ScanPage(private val activity: Activity, val root: View) {
      * hasn't been seen for [GONE_MS] — so a code held in view (or two codes in view at once)
      * doesn't keep re-triggering, but moving to another code replaces the popup immediately.
      */
-    private fun onFrame(frame: io.github.vladgba.picostrips.engine.LumaFrame) {
+    private fun onFrame(frame: LumaFrame) {
         val result = try { engine.decode(frame) } catch (_: Throwable) { null } ?: return
         if (result.text.isEmpty()) return
         val key = key(result)

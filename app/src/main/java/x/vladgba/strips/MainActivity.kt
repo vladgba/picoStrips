@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips
+package x.vladgba.strips
 
 import android.app.Activity
 import android.content.Intent
@@ -6,10 +6,10 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import io.github.vladgba.picostrips.ui.Actions
-import io.github.vladgba.picostrips.ui.GeneratePage
-import io.github.vladgba.picostrips.ui.LastPage
-import io.github.vladgba.picostrips.ui.ScanPage
+import x.vladgba.strips.ui.Actions
+import x.vladgba.strips.ui.GeneratePage
+import x.vladgba.strips.ui.LastPage
+import x.vladgba.strips.ui.ScanPage
 
 class MainActivity : Activity() {
     private lateinit var scan: ScanPage

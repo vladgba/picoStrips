@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.engine
+package x.vladgba.strips.engine
 
 /** A camera frame as an 8-bit luminance buffer with rowStride == width. */
 class LumaFrame(

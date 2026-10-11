@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.data
+package x.vladgba.strips.data
 
 import android.content.ContentValues
 import android.content.Context

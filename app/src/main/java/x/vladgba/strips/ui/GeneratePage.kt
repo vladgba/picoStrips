@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.ui
+package x.vladgba.strips.ui
 
 import android.app.Activity
 import android.graphics.Bitmap
@@ -13,11 +13,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
-import io.github.vladgba.picostrips.R
-import io.github.vladgba.picostrips.data.Entry
-import io.github.vladgba.picostrips.data.History
-import io.github.vladgba.picostrips.engine.CodeRenderer
-import io.github.vladgba.picostrips.engine.Formats
+import x.vladgba.strips.R
+import x.vladgba.strips.data.Entry
+import x.vladgba.strips.data.History
+import x.vladgba.strips.engine.CodeRenderer
+import x.vladgba.strips.engine.Formats
 
 class GeneratePage(private val activity: Activity, val root: View) {
     private val prefs = activity.getSharedPreferences("settings", Activity.MODE_PRIVATE)

@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.ui
+package x.vladgba.strips.ui
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import x.vladgba.strips.R
 import kotlin.math.max
 import kotlin.math.min
 
@@ -16,7 +17,7 @@ import kotlin.math.min
  */
 class ViewfinderView(ctx: Context, attrs: AttributeSet?) : View(ctx, attrs) {
     private val dp = resources.displayMetrics.density
-    private val accent = ctx.getColor(io.github.vladgba.picostrips.R.color.accent)
+    private val accent = ctx.getColor(R.color.accent)
     private val scrim = Paint().apply { color = 0x66000000 }
     private val bracket = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE; strokeWidth = 4 * dp; strokeCap = Paint.Cap.ROUND

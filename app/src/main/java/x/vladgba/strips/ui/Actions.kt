@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.ui
+package x.vladgba.strips.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -17,8 +17,8 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.TextView
 import android.widget.Toast
-import io.github.vladgba.picostrips.R
-import io.github.vladgba.picostrips.ShareProvider
+import x.vladgba.strips.R
+import x.vladgba.strips.ShareProvider
 import java.io.File
 
 /** Copy / share / open helpers. Everything is handed to other apps via intents; we never touch the network. */

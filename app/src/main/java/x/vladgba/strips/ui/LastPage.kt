@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.ui
+package x.vladgba.strips.ui
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -10,10 +10,11 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.PopupMenu
 import android.widget.TextView
-import io.github.vladgba.picostrips.CodeActivity
-import io.github.vladgba.picostrips.R
-import io.github.vladgba.picostrips.data.Entry
-import io.github.vladgba.picostrips.data.History
+import x.vladgba.strips.CodeActivity
+import x.vladgba.strips.R
+import x.vladgba.strips.data.Entry
+import x.vladgba.strips.data.History
+import x.vladgba.strips.engine.Formats
 
 class LastPage(private val activity: Activity, val root: View) {
     private val list: ListView = root.findViewById(R.id.lastList)
@@ -30,7 +31,7 @@ class LastPage(private val activity: Activity, val root: View) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val v = convertView ?: LayoutInflater.from(activity).inflate(R.layout.item_last, parent, false)
             val e = items[position]
-            v.findViewById<TextView>(R.id.itemFormat).text = io.github.vladgba.picostrips.engine.Formats.label(e.format)
+            v.findViewById<TextView>(R.id.itemFormat).text = Formats.label(e.format)
             v.findViewById<TextView>(R.id.itemSource).text = activity.getString(
                 if (e.source == Entry.GENERATED) R.string.src_generated else R.string.src_scanned
             ) + (e.engine?.let { " · $it" } ?: "")

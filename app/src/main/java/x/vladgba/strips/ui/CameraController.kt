@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.ui
+package x.vladgba.strips.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,7 +18,7 @@ import android.os.HandlerThread
 import android.util.Size
 import android.view.Surface
 import android.view.TextureView
-import io.github.vladgba.picostrips.engine.LumaFrame
+import x.vladgba.strips.engine.LumaFrame
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.abs
 import kotlin.math.max

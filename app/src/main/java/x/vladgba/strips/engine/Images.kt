@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips.engine
+package x.vladgba.strips.engine
 
 import android.content.Context
 import android.graphics.Bitmap

@@ -1,4 +1,4 @@
-package io.github.vladgba.picostrips
+package x.vladgba.strips
 
 import android.content.ContentProvider
 import android.content.ContentValues

@@ -7,11 +7,11 @@ plugins {
 apply(from = rootProject.file("gradle/android-common.gradle"))
 
 android {
-    namespace = "io.github.vladgba.picostrips"
+    namespace = "x.vladgba.strips"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "io.github.vladgba.picostrips"
+        applicationId = "x.vladgba.strips"
         minSdk = 24
         targetSdk = 36
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }

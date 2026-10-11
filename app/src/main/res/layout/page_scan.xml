@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <io.github.vladgba.picostrips.ui.ViewfinderView
+    <x.vladgba.strips.ui.ViewfinderView
         android:id="@+id/viewfinder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
