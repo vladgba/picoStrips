@@ -1,5 +1,6 @@
 package io.github.vladgba.picostrips.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -8,8 +9,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ClickableSpan
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
+import android.widget.TextView
 import android.widget.Toast
 import io.github.vladgba.picostrips.R
 import io.github.vladgba.picostrips.ShareProvider
@@ -17,13 +23,58 @@ import java.io.File
 
 /** Copy / share / open helpers. Everything is handed to other apps via intents; we never touch the network. */
 object Actions {
-    private val schemes = listOf("http://", "https://", "mailto:", "tel:", "sms:", "smsto:", "geo:", "market://")
+    /** Any RFC 3986 scheme followed by a single token: covers http, mailto, FIDO:/, otpauth://, bitcoin:, ... */
+    private val uriRegex = Regex("^[A-Za-z][A-Za-z0-9+.-]*:\\S+$")
+
+    /** Structured payloads that look like URIs but no app opens via ACTION_VIEW. */
+    private val notUris = setOf("wifi", "mecard", "matmsg", "bizcard", "begin")
+
+    /** Links inside longer text: `scheme:/...`, well-known opaque schemes, and bare `www.` hosts. */
+    private val linkRegex = Regex(
+        "(?i)(?<![A-Za-z0-9+.-])(?:[a-z][a-z0-9+.-]*:/\\S+|(?:mailto|tel|sms|smsto|geo|market|magnet|bitcoin):\\S+|www\\.\\S+)"
+    )
+    private const val TRAILING = ".,;:!?'\")]}>"
 
     fun openUri(text: String): Uri? {
         val t = text.trim()
-        if (t.contains('\n')) return null
-        val lower = t.lowercase()
-        return if (schemes.any { lower.startsWith(it) }) Uri.parse(t) else null
+        if (t.startsWith("www.", ignoreCase = true) && t.none { it.isWhitespace() }) return Uri.parse("https://$t")
+        if (!uriRegex.matches(t)) return null
+        if (t.substringBefore(':').lowercase() in notUris) return null
+        return Uri.parse(t)
+    }
+
+    /** Shows [text] in [view] with every link in it tappable; taps elsewhere fall through to the view's parent / selection. */
+    @SuppressLint("ClickableViewAccessibility")
+    fun setLinkedText(view: TextView, text: String) {
+        val whole = openUri(text)
+        val s = SpannableString(text)
+        if (whole != null) {
+            s.setSpan(link(view.context, text.trim()), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        } else {
+            for (m in linkRegex.findAll(text)) {
+                val url = m.value.trimEnd { it in TRAILING }
+                if (openUri(url) == null) continue
+                s.setSpan(link(view.context, url), m.range.first, m.range.first + url.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        }
+        view.text = s
+        view.setOnTouchListener { v, e ->
+            val tv = v as TextView
+            val layout = tv.layout ?: return@setOnTouchListener false
+            val x = e.x.toInt() - tv.totalPaddingLeft + tv.scrollX
+            val y = e.y.toInt() - tv.totalPaddingTop + tv.scrollY
+            val line = layout.getLineForVertical(y)
+            if (x < layout.getLineLeft(line) || x > layout.getLineRight(line)) return@setOnTouchListener false
+            val off = layout.getOffsetForHorizontal(line, x.toFloat())
+            val span = (tv.text as? Spanned)?.getSpans(off, off, ClickableSpan::class.java)?.firstOrNull()
+                ?: return@setOnTouchListener false
+            if (e.action == MotionEvent.ACTION_UP) span.onClick(tv)
+            true
+        }
+    }
+
+    private fun link(ctx: Context, url: String) = object : ClickableSpan() {
+        override fun onClick(widget: View) = open(ctx, url)
     }
 
     fun copy(ctx: Context, text: String) {
@@ -38,11 +89,15 @@ object Actions {
 
     fun open(ctx: Context, text: String) {
         val uri = openUri(text) ?: return
-        try {
-            ctx.startActivity(Intent(Intent.ACTION_VIEW, uri).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        } catch (_: Exception) {
-            toast(ctx, R.string.no_app)
+        // Intent filters match schemes case-sensitively: try as scanned (e.g. "FIDO:/"), then lowercased.
+        for (u in listOf(uri, uri.normalizeScheme()).distinct()) {
+            try {
+                ctx.startActivity(Intent(Intent.ACTION_VIEW, u).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                return
+            } catch (_: Exception) {
+            }
         }
+        toast(ctx, R.string.no_app)
     }
 
     fun shareImage(ctx: Context, bitmap: Bitmap) {

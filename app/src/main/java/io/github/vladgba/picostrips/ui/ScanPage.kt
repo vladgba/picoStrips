@@ -156,7 +156,7 @@ class ScanPage(private val activity: Activity, val root: View) {
         lastText = r.text
         cardFormat.text = Formats.label(r.format)
         cardCount.text = if (sessionCount > 1) activity.getString(R.string.scan_count, sessionCount) else ""
-        cardText.text = r.text
+        Actions.setLinkedText(cardText, r.text)
         cardOpen.visibility = if (Actions.openUri(r.text) != null) View.VISIBLE else View.GONE
     }
 
