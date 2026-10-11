@@ -32,7 +32,7 @@ class CodeActivity : Activity() {
         val src = getString(if (entry.source == Entry.GENERATED) R.string.src_generated else R.string.src_scanned)
         val time = DateUtils.formatDateTime(this, entry.time, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH)
         findViewById<TextView>(R.id.codeMeta).text = listOfNotNull(src, entry.engine, time).joinToString(" · ")
-        findViewById<TextView>(R.id.codeText).text = entry.text
+        Actions.setLinkedText(findViewById(R.id.codeText), entry.text)
 
         val image = findViewById<ImageView>(R.id.codeImage)
         bitmap = if (Formats.isWritable(entry.format)) runCatching { CodeRenderer.render(entry.format, entry.text) }.getOrNull() else null
