@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">picoStrips</string>
+    <string name="tab_scan">Scan</string>
+    <string name="tab_last">Last</string>
+    <string name="tab_generate">Generate</string>
+
+    <string name="camera_needed">Camera access is needed to scan codes.\nNothing leaves your device.</string>
+    <string name="grant_camera">Allow camera</string>
+    <string name="open_settings">Open settings</string>
+    <string name="no_camera">No camera available</string>
+    <string name="scan_hint">Point at a barcode or QR code</string>
+    <string name="torch">Torch</string>
+    <string name="from_image">Scan image</string>
+    <string name="nothing_found">No code found in this image</string>
+
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="scan_count">#%1$d this session</string>
+    <string name="delete">Delete</string>
+    <string name="share_image">Share image</string>
+    <string name="save">Save to Last</string>
+    <string name="saved">Saved</string>
+    <string name="copied">Copied</string>
+    <string name="no_app">No app can open this</string>
+
+    <string name="last_empty">Nothing yet.\nScanned and saved codes show up here.</string>
+    <string name="last_count">%1$d codes</string>
+    <string name="clear">Clear</string>
+    <string name="clear_confirm">Delete all codes from Last?</string>
+    <string name="cancel">Cancel</string>
+    <string name="src_scanned">Scanned</string>
+    <string name="src_generated">Generated</string>
+
+    <string name="format">Format</string>
+    <string name="content">Content</string>
+    <string name="ec_level">Error correction</string>
+    <string name="gen_placeholder">Type text, a link, numbers…</string>
+    <string name="not_renderable">This format can be read but not drawn, so only the content is shown.</string>
+</resources>

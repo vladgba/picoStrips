@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lastBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="4dp">
+
+        <TextView
+            android:id="@+id/lastCount"
+            style="@style/PS.Label"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <Button android:id="@+id/btnClear" style="@style/PS.Action" android:text="@string/clear" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lastList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="12dp" />
+
+    <TextView
+        android:id="@+id/lastEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:padding="32dp"
+        android:text="@string/last_empty"
+        android:textColor="@color/text_dim"
+        android:textSize="16sp" />
+</LinearLayout>
