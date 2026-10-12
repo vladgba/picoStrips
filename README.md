@@ -17,6 +17,14 @@ Header with three tabs:
   Long-press for quick actions.
 - **Generate** — pick a format, type content, live preview; share as PNG or save to Last.
 
+## Honeywell scanners
+
+On Honeywell mobile computers (CT40, CT60, EDA5x, …) the built-in scan engine works too, through Honeywell's
+`DataCollection.jar` (`app/libs`). Press the hardware trigger on any tab: the app switches to **Scan** and shows the
+code in the same popup, and it is saved to **Last**. The scanner is claimed only while the app is in the foreground, so
+other apps get it back when you leave. On other devices this does nothing: the app first checks that Honeywell's
+scanner service is installed.
+
 ## Libraries
 
 - **Scanning — zxing-cpp** (native, ~1.2–1.8 MB per ABI): QR, Micro QR, rMQR, Aztec, Data Matrix, PDF417,
@@ -39,6 +47,7 @@ Requires JDK 17+, Android SDK 36. minSdk 24.
 
 ## Privacy
 
-The merged manifest contains exactly one permission: `CAMERA`. `INTERNET` / network-state permissions are
+The merged manifest contains two permissions: `CAMERA`, and `com.honeywell.decode.permission.DECODE`, which
+only means anything on Honeywell devices. `INTERNET` / network-state permissions are
 explicitly removed with `tools:node="remove"`, so no dependency can add them. History lives in a local SQLite
 database and is excluded from cloud backup.

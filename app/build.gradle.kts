@@ -57,4 +57,6 @@ dependencies {
     // Generating: the zxing-cpp Android wrapper has no writer, so ZXing's Java core draws codes.
     // R8 strips its (unused) reader classes.
     implementation("com.google.zxing:core:3.5.4")
+    // Honeywell scan engine client (DataCollection.jar). Only binds on Honeywell devices.
+    implementation(files("libs/DataCollection.jar"))
 }

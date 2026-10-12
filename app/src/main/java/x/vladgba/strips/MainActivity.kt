@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import x.vladgba.strips.scanner.HoneywellScanner
 import x.vladgba.strips.ui.Actions
 import x.vladgba.strips.ui.GeneratePage
 import x.vladgba.strips.ui.LastPage
@@ -15,6 +16,7 @@ class MainActivity : Activity() {
     private lateinit var scan: ScanPage
     private lateinit var last: LastPage
     private lateinit var generate: GeneratePage
+    private lateinit var hwScanner: HoneywellScanner
     private lateinit var tabs: List<View>
     private lateinit var pages: List<View>
     private var current = TAB_SCAN
@@ -35,6 +37,13 @@ class MainActivity : Activity() {
         current = savedInstanceState?.getInt("tab", TAB_SCAN)
             ?: getSharedPreferences("settings", MODE_PRIVATE).getInt("tab", TAB_SCAN)
         select(current, force = true)
+
+        // Hardware trigger works from any tab: it switches to Scan and shows the result there.
+        hwScanner = HoneywellScanner(this) { result ->
+            select(TAB_SCAN)
+            scan.onExternalScan(result)
+        }
+        hwScanner.open()
     }
 
     private fun select(index: Int, force: Boolean = false) {
@@ -57,6 +66,7 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         resumed = true
+        hwScanner.resume()
         when (current) {
             TAB_SCAN -> scan.show()
             TAB_LAST -> last.show()
@@ -65,8 +75,14 @@ class MainActivity : Activity() {
 
     override fun onPause() {
         resumed = false
+        hwScanner.pause()
         scan.hide()
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        hwScanner.close()
+        super.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

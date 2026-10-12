@@ -4,6 +4,8 @@
 
     <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Honeywell built-in scanner (ignored on other devices) -->
+    <uses-permission android:name="com.honeywell.decode.permission.DECODE" />
 
     <!-- Offline by design: make sure no dependency can ever merge network access in. -->
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
@@ -12,6 +14,8 @@
 
     <!-- Lets "Open" find a browser / dialer etc. for scanned links on Android 11+ -->
     <queries>
+        <!-- Honeywell data collection service, bound by the built-in scanner support -->
+        <package android:name="com.intermec.datacollectionservice" />
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https" />

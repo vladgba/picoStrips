@@ -106,6 +106,9 @@ class ScanPage(private val activity: Activity, val root: View) {
         }
     }
 
+    /** A code read by a hardware scanner: always shown, even if it's the one already on screen. */
+    fun onExternalScan(result: ScanResult) = deliver(result, force = true)
+
     private fun hasPermission() = activity.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
 
     private fun showPermissionPanel(message: String?, button: String?) {
