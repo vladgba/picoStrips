@@ -48,6 +48,5 @@ Requires JDK 17+, Android SDK 36. minSdk 24.
 ## Privacy
 
 The merged manifest contains two permissions: `CAMERA`, and `com.honeywell.decode.permission.DECODE`, which
-only means anything on Honeywell devices. `INTERNET` / network-state permissions are
-explicitly removed with `tools:node="remove"`, so no dependency can add them. History lives in a local SQLite
+only means anything on Honeywell devices. History lives in a local SQLite
 database and is excluded from cloud backup.
